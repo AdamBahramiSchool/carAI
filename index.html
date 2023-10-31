@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <fieldset>
+        <legend>
+            Retrieve a car model
+        </legend>
+        <input type="text" id="carGet" placeholder="Car Model"/>
+        <button type="button" id="buttonGet" onclick="getUserCar()">Retrieve Vehicle Model</button> 
+    </fieldset>
+    <script>
+        //js code
+        async function getUserCar(){
+            const car=document.getElementById("carGet").value;
+            console.log(car);
+            if(!car){
+                //if its blank or empty value
+                alert("Please enter a valid car model")
+                return; 
+            }
+            const endpoint= new URL(`https://api.api-ninjas.com/v1/cars?model=${car}`);
+            console.log(endpoint);
+            const apiKey = 'l+YZGwWHq7iAjfITpP+eeg==aU2YcKIRe62WlnWK';
+
+            const response=await fetch(endpoint, {
+                headers: {'X-Api-Key': apiKey }
+            });
+            
+            const data=await response.json();
+            if (data && data.length === 0) {
+                alert("Car not found");
+                return;
+            }
+            else{
+                console.log(data);
+                alert(`City Mpg: ${data[0].city_mpg}, ${data[0].city_mpg} `)
+                return;
+            }
+        }
+        //iterate over all car models it gives you so while data[i]!=null
+    </script>
+    <p>data[0].city_mpg</p>
+</body>
+</html>
