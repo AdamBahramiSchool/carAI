@@ -1,0 +1,53 @@
+// Lamb.js
+import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+
+function Test() {
+  useEffect(() => {
+    const canvas = document.querySelector('.webgl');
+    const scene = new THREE.Scene();
+    const loader = new GLTFLoader();
+
+    loader.load('./glb/lamborghini_aventador.glb', (glb) => {
+      const root = glb.scene;
+      root.scale.set(0.01, 0.01, 0.01);
+      scene.add(root);
+    }, (xhr) => {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    }, (error) => {
+      console.log('An error occurred');
+    });
+
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(2, 2, 5);
+    scene.add(light);
+
+    const sizes = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+
+    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+    camera.position.set(0, 1, 2);
+    scene.add(camera);
+
+    const renderer = new THREE.WebGL1Renderer({
+      canvas: canvas,
+    });
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.gammaOutput = true;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  }, []);
+
+  return <canvas className="webgl" />;
+}
+
+export default Test;
