@@ -27,7 +27,9 @@ function ThreejsLamb() {
           gl.setSize(innerWidth, innerHeight);
         }}
       >
-        <OrbitControls enableZoom={true} /> {/* Allow zooming with OrbitControls */}
+        <OrbitControls  enableZoom={false}
+          enablePan={true}
+          enableRotate={true} /> 
         <ambientLight intensity={3} />
         <directionalLight position={[-2, 5, 2]} intensity={1} />
         <Suspense fallback={null}>

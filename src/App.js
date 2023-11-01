@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import Home from './pages/Home'
-import ThreejsLamb from './components/ThreejsLamb';
+import CarDisplay from './pages/CarDisplay';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/lamb" element={< ThreejsLamb/>} />
+        <Route path="/car" element={<CarDisplay />} />
       </Routes>
     </Router>
   );

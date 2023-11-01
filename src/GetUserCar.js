@@ -31,8 +31,9 @@ async function GetUserCar(car){
     Model: ${data[0].model || "N/A"},
     Transmission: ${data[0].transmission || "N/A"},
     Year: ${data[0].year || "N/A"}`);
-        return;
+        return true;
     }
+    return false;
 }
 
 export default GetUserCar;
