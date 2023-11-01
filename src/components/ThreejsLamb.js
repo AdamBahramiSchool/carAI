@@ -1,53 +1,41 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+import React, { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import Lamb from './Lamb.jsx';
+import LambRotate from './LambRotate.js';
+
+const containerStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100vh',
+};
 
 function ThreejsLamb() {
-  useEffect(() => {
-    const canvas = document.querySelector('.webgl');
-    const scene = new THREE.Scene();
-    const loader = new GLTFLoader();
+  return (
+    <div style={containerStyle}>
+      <Canvas
+        style={{ width: '100%', height: '100%' }}
+        camera={{ position: [10, 10, 20] }} // Adjust the camera position to zoom out
+        onCreated={({ gl }) => {
+          // Calculate the aspect ratio based on the window width and height
+          const { innerWidth, innerHeight } = window;
+          const aspect = innerWidth / innerHeight;
 
-    loader.load('./glb/lamborghini_aventador.glb', (glb) => {
-      console.log(glb);
-      const root = glb.scene;
-      root.scale.set(0.1, 0.1, 0.1);
-      scene.add(root);
-    }, (xhr) => {
-      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-    }, (error) => {
-      console.log('An error occurred');
-    });
-
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(2, 2, 5);
-    scene.add(light);
-
-    const sizes = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    };
-
-    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-    camera.position.set(0, 1, 2);
-    scene.add(camera);
-
-    const renderer = new THREE.WebGL1Renderer({
-      canvas: canvas,
-    });
-    renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.gammaOutput = true;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    }
-    animate();
-  }, []);
-
-  return <canvas className="webgl" />;
+          // Set the aspect ratio for the camera
+          gl.setPixelRatio(window.devicePixelRatio);
+          gl.setSize(innerWidth, innerHeight);
+        }}
+      >
+        <OrbitControls enableZoom={true} /> {/* Allow zooming with OrbitControls */}
+        <ambientLight intensity={3} />
+        <directionalLight position={[-2, 5, 2]} intensity={1} />
+        <Suspense fallback={null}>
+          <LambRotate />
+        </Suspense>
+      </Canvas>
+    </div>
+  );
 }
 
 export default ThreejsLamb;

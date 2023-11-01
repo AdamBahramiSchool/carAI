@@ -2,7 +2,6 @@ import './App.css';
 import React from 'react';
 import Home from './pages/Home'
 import ThreejsLamb from './components/ThreejsLamb';
-import Test from './components/Test.js'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
