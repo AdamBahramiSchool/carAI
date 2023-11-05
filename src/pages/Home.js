@@ -26,10 +26,6 @@ function Home() {
     }
   }
 
-  if(input!==''){
-    localStorage.setItem("input",JSON.stringify(input));
-  }
-
   return (
     <div className="body">
       <div className="carSearchContainer">

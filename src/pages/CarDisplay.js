@@ -1,33 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import getPicture from '../components/api/imagineArt';
+import GetPicture from '../components/api/ImagineArt';
 
 function CarDisplay() {
-  const [imageURL, setImageURL] = useState(null);
+  const [image, setImage] = useState(null);
+  const [userInput, setUserInput] = useState(localStorage.getItem("car_logistics"));
 
-  async function fetchImage() {
-    try {
-      const imageResponse = await getPicture();
-      const imageBlob = await imageResponse.blob();
-      const url = URL.createObjectURL(imageBlob);
-      setImageURL(url);
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  }
-
-  // Fetch a new image when the component mounts
   useEffect(() => {
+    async function fetchImage() {
+      try {
+        const image = await GetPicture(userInput);
+        setImage(image);
+      } catch (error) {
+        console.error(error);
+      }
+    }
     fetchImage();
-  }, []);
+  }, [userInput]); // Pass userInput as a dependency here
 
   return (
     <div>
-      {imageURL ? (
-        <div>
-          <img src={imageURL} alt="Generated Image" />
-        </div>
+      {image ? (
+        <img src={image} alt="Generated Car" />
       ) : (
-        "Loading..."
+        <p>Loading...</p>
       )}
     </div>
   );
