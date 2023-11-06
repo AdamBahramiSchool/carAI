@@ -1,0 +1,28 @@
+
+.page-container {
+    background-color: limegreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure the container takes the full viewport height */
+  }
+
+.imageContainer {
+    width: 512px; /* Set a specific width for your container */
+    height: 512px; /* Set a specific height for your container */
+    background-color: #f0f0f0; /* Optional background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card{
+    width: 512px;
+    height:512 px;
+    border: 2px solid black;
+    border-radius: 8px;    
+  }
+
+  .cardText{
+    background-color: white;
+  }

@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 async function GetUserCar(car){
     if(!car){
         //if its blank or empty value
@@ -35,6 +37,8 @@ async function GetUserCar(car){
         console.log(imagePrompt);
         localStorage.setItem("car_logistics",imagePrompt);
         console.log(localStorage.getItem("car_logistics"));
+
+        localStorage.setItem("carBodyInfo",JSON.stringify(data))
         return true;
     }
     return false;
